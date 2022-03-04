@@ -33,7 +33,11 @@ namespace API_Noroff
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API_Noroff", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "API_Noroff", 
+                    Version = "v1",
+                    Description = "API endpoint assignment."
+                });
             });
             services.AddDbContext<MoviesContext>(options =>
             {

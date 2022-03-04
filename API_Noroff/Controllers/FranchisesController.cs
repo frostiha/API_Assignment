@@ -7,11 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EFDataAccessLibrary.DataAccess;
 using EFDataAccessLibrary.Models;
+using System.Net.Mime;
 
 namespace API_Noroff.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/franchises")]
     [ApiController]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class FranchisesController : ControllerBase
     {
         private readonly MoviesContext _context;
@@ -21,14 +25,21 @@ namespace API_Noroff.Controllers
             _context = context;
         }
 
-        // GET: api/Franchises
+        /// <summary>
+        /// Get all franchises
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Franchise>>> GetFranchises()
         {
             return await _context.Franchises.ToListAsync();
         }
 
-        // GET: api/Franchises/5
+        /// <summary>
+        /// Get a specific franchise by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Franchise>> GetFranchise(int id)
         {
@@ -42,8 +53,12 @@ namespace API_Noroff.Controllers
             return franchise;
         }
 
-        // PUT: api/Franchises/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Update franchise by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="franchise"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFranchise(int id, Franchise franchise)
         {
@@ -73,8 +88,11 @@ namespace API_Noroff.Controllers
             return NoContent();
         }
 
-        // POST: api/Franchises
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Add a new franchise
+        /// </summary>
+        /// <param name="franchise"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Franchise>> PostFranchise(Franchise franchise)
         {
@@ -84,7 +102,11 @@ namespace API_Noroff.Controllers
             return CreatedAtAction("GetFranchise", new { id = franchise.Id }, franchise);
         }
 
-        // DELETE: api/Franchises/5
+        /// <summary>
+        /// Delete a frachise by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFranchise(int id)
         {
